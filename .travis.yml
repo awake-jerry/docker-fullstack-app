@@ -17,7 +17,7 @@ after_success:
   - docker build -t sleepyjoe/docker-nginx ./nginx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
-
+  
   - docker push sleepyjoe/docker-frontend
   - docker push sleepyjoe/docker-backend
   - docker push sleepyjoe/docker-nginx
