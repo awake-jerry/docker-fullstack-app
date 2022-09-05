@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t sleepyjoe/react-test-app -f ./frontend/Dockerfile.dev ./frontend 
+  - docker build -t sleepyjoe/react-test-app -f ./frontend/Dockerfile.dev ./frontend
 
 script:
   - docker run -e CI=true sleepyjoe/react-test-app npm run test
