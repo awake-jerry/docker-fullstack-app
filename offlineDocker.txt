@@ -1,0 +1,39 @@
+참조 : https://engineer-mole.tistory.com/230
+
+[오프라인 도커 배포절차 안내]
+# 사용환경 : 도커엔진 설치환경 BaseImage 다운로드용PC,
+          도커엔진 설치환경 서버PC
+# 온라인에서 이미지 가져오기
+  < 도커엔진 설치환경 BaseImage 다운로드용PC >
+    step1) 도커파일 작성시 명시될 BaseImage를 도커 레지스트리(도커허브 or 계정 리파지토리 등)에서
+	 다운로드 하기위한 명령 입력
+	   docker pull [BaseImage 이름]
+	   $ docker pull tomcat
+		   
+    step2) 도커엔진에 다운로드 받은 BaseImage를 tar파일로 압축 하기위한 명령 입력
+	   docker save -o [tar압축 할 파일명] [BaseImage 이름]
+	   $ docker save -o docker-app.tar sleepyjoe/docker-backend
+
+    step3) 외부 libary 및 Dependency 를 다운로드 받는다.
+             (단, 별도의 repository 환경이 구축되어 있을경우 생략)
+	       
+    step4) 압축된 tar파일과 step3)의 모든 파일을 서버PC로 전송한다.
+		
+  < 도커엔진 설치환경 서버PC >
+    step1) 전송받은 tar파일을 사용, 도커엔진(=도커 서버)에 BaseImage를 등록 하기위한 명령 입력
+	   docker load -i [전송받은 tar압축 파일명]
+	   $ docker load -i docker-app.tar
+
+        # docker Server(엔진) 설치 시 다운로드 경로
+        # 설치방법
+        # 1. tgz 파일을 tar xvf 로 압축해제
+        # 2. 압축해제 시 생성된 docker 폴더를 /usr/bin 하위 이동
+        # 3. dockerd 명령실행
+        https://download.docker.com/linux/static/stable/
+
+    step2) 등록된 BaseImage를 사용, 구동 할 어플리케이션 별 도커파일 작성
+	
+    step3) 도커파일로 Image 생성
+	
+    step4) 생성된 Image을 Container에서 기동
+

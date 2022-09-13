@@ -1,5 +1,6 @@
-//서버구동에 필요한 모듈들을 가져오기
+// 서버구동에 필요한 모듈 가져오기
 const express = require('express');
+// 웹 post url 요청 시, param 요청 받기위한 모듈
 const bodyParser = require('body-parser');
 
 const db = require('./db');
@@ -9,6 +10,10 @@ const app = express();
 
 // json 형태로 오는 요청의 본문을 해석해줄 수 있게 등록
 app.use(bodyParser.json());
+
+app.listen(5000, () => {
+    console.log('::: backend Application is started at 5000 port :::');
+})
 
 // lists 테이블 만들기
 //db.pool.query(`CREATE TABLE lists (
@@ -33,7 +38,11 @@ app.get('/api/values', function(req, res) {
 
 // DB lists 테이블에 데이터를 입력하기
 app.post('/api/value', function(req, res, next) {
-    db.pool.query(`INSERT INTO lists (value) VALUES("${req.body.value}")`,
+    // db.pool.query(`INSERT INTO lists (value) VALUES("${req.body.value}")`,
+    let param = {
+        value : req.body.value
+    };
+    db.pool.query(`INSERT INTO lists set`, param,
     (err, results, fields) => {
         if(err) {
             return res.status(500).send(err)
@@ -43,6 +52,3 @@ app.post('/api/value', function(req, res, next) {
     })
 })
 
-app.listen(5000, () => {
-    console.log('애플리케이션이 5000번 포트에서 시작 되었습니다.');
-})
