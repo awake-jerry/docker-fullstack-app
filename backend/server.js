@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 //})
 
 // DB lists 테이블에 있는 모든 데이터를 가져오기
-app.get('/api/values', function(req, res, next) {
+app.get('/api/values', function(req, res) {
     db.pool.query(`SELECT * FROM lists;`,
     (err, results, fields) => {
         if(err) {
@@ -44,5 +44,5 @@ app.post('/api/value', function(req, res, next) {
 })
 
 app.listen(5000, () => {
-    console.log('애플리케이션이 서버 5000번 포트에서 되었습니다.');
+    console.log('애플리케이션이 5000번 포트에서 시작 되었습니다.');
 })
